@@ -1,0 +1,4 @@
+
+{{name='hello'}}
+
+<a href="fdsa"> {{=name}} </a>

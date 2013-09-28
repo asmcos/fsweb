@@ -1,0 +1,17 @@
+<html>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+{{
+
+import os
+f = os.popen("ls -l")
+content = f.read()
+
+}}
+
+
+ls -l: </p>
+<hr>
+{{=content}}
+
+
+</html>
