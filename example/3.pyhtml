@@ -1,0 +1,10 @@
+<html>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+
+
+<hr>
+<form method='post' action='4post.pyhtml'>
+<input name='username' value='' />
+<input type='submit' value='ok'>
+</form>
+</html>

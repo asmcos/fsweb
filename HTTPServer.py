@@ -18,10 +18,44 @@ import cgi
 import sys
 import shutil
 import mimetypes
- 
-from StringIO import StringIO as SIO
+import cgi
 
+from StringIO import StringIO as SIO
 from template import *
+
+
+
+    
+def do_POST(self):
+    # Parse the form data posted
+    form = cgi.FieldStorage(
+        fp=self.rfile, 
+        headers=self.headers,
+        environ={'REQUEST_METHOD':'POST',
+                 'CONTENT_TYPE':self.headers['Content-Type'],
+                 })
+
+    # Begin the response
+    self.send_response(200)
+  
+    self.send_header("Content-type", 'text/html')
+
+    print form
+
+    f = SIO()
+    path = self.translate_path(self.path)
+    buf = template_file(path,{'POST':form})
+    f.write(buf)
+    f.seek(0)
+
+    self.send_header("Content-Length", str(len(buf)))
+ 
+    self.end_headers()
+    self.copyfile(f,self.wfile)
+    f.close()
+
+    return
+
 
 class FsHTTPRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 
@@ -44,6 +78,9 @@ class FsHTTPRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         if f:
 	    self.copyfile(f,self.wfile)
             f.close()
+
+    def do_POST(self):
+	do_POST(self)
 
     def do_HEAD(self):
         """Serve a HEAD request."""
