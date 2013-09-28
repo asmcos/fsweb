@@ -1,15 +1,8 @@
+
 <html>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-{{
 
-import os,datetime
-
-}}
-
-
-date: </p>
-<hr>
-{{=datetime.datetime.now()}}
-
-
+{{for i in POST.keys():}}
+{{=i}} | {{=POST[i].value}}
+{{pass}}
 </html>

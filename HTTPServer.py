@@ -19,32 +19,39 @@ import sys
 import shutil
 import mimetypes
 import cgi
+import urlparse
 
 from StringIO import StringIO as SIO
 from template import *
 
 
+def get_params(path):
+    parsed_path = urlparse.urlparse(path)
+    try:
+        params = dict([p.split('=') for p in parsed_path[4].split('&')])
+    except:
+        params = {}
 
+    return params
     
-def do_POST(self):
+def handler_POST(self):
     # Parse the form data posted
-    form = cgi.FieldStorage(
+    post_form = cgi.FieldStorage(
         fp=self.rfile, 
         headers=self.headers,
         environ={'REQUEST_METHOD':'POST',
                  'CONTENT_TYPE':self.headers['Content-Type'],
                  })
-
+    params = get_params(self.path)
     # Begin the response
     self.send_response(200)
   
     self.send_header("Content-type", 'text/html')
 
-    print form
 
     f = SIO()
     path = self.translate_path(self.path)
-    buf = template_file(path,{'POST':form})
+    buf = template_file(path,{'POST':post_form,'GET':params})
     f.write(buf)
     f.seek(0)
 
@@ -80,7 +87,7 @@ class FsHTTPRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
             f.close()
 
     def do_POST(self):
-	do_POST(self)
+	handler_POST(self)
 
     def do_HEAD(self):
         """Serve a HEAD request."""
@@ -127,8 +134,11 @@ class FsHTTPRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         self.send_response(200)
         self.send_header("Content-type", ctype)
 
+
+        params = get_params(self.path)
+ 
 	f1 = SIO()
-	buf = template_file(path)
+	buf = template_file(path,{'GET':params})
 	f1.write(buf)
 	f1.seek(0)
 

@@ -1,4 +1,6 @@
 
-{{name='hello'}}
+{{name='fsweb'}}
+{{url='http://github.com/asmcos/%s'%name}}
 
-<a href="fdsa"> {{=name}} </a>
+<a href={{=url}}> {{=name}} </a>
+
