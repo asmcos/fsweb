@@ -3,6 +3,7 @@
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 
 {{for i in GET.keys():}}
-{{=i}} | {{=GET[i]}}
+	{{=i}} | {{=GET[i]}}
 {{pass}}
+
 </html>

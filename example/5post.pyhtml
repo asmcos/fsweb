@@ -3,6 +3,6 @@
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 
 {{for i in POST.keys():}}
-{{=i}} | {{=POST[i].value}}
+	{{=i}} | {{=POST[i].value}}
 {{pass}}
 </html>

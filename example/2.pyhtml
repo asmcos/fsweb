@@ -4,14 +4,16 @@
 
 import os
 f = os.popen("ls -l")
-content = f.read()
+content = f.readlines()
 
 }}
 
 
 ls -l: </p>
 <hr>
-{{=content}}
 
+{{for line in content:}}
+	<p>{{=line}}</p> 
+{{pass}}
 
 </html>
