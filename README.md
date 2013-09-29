@@ -1,5 +1,7 @@
-Fsweb is a fast simple web framework base on python.
-Fsweb from SimpleHTTPServer + uliweb template.
+Fsweb is a fast simple Python web framework .
+Fsweb base on SimpleHTTPServer + uliweb template.
+It looks like PHP, ASP.
+
 
 usage:
 
@@ -7,7 +9,7 @@ usage:
 python HTTPServer
 ```
 
-browser: 127.0.0.1:8000
+browser: http://127.0.0.1:8000
 
 Test:
 
