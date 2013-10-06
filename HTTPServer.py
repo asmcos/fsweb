@@ -123,6 +123,9 @@ class FsHTTPRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
             else:
                 return self.list_directory(path)
         ctype = self.guess_type(path)
+	if ctype == '404':
+            self.send_error(404, "File not found")
+            return None
         try:
             # Always read in binary mode. Opening files in text mode may cause
             # newline translations, making the actual size of the content
@@ -258,11 +261,11 @@ class FsHTTPRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
     extensions_map = mimetypes.types_map.copy()
     extensions_map.update({
         '': 'application/octet-stream', # Default
-        '.py': 'text/plain',
         '.c': 'text/plain',
         '.h': 'text/plain',
         '.pyhtml': 'text/html',
         '.html': 'text/html',
+        '.py': '404',
         })
 
 

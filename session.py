@@ -50,9 +50,10 @@ class DiskStore:
         self.root = root
 
     def _get_path(self, key):
+	if not key:
+	    return None
         if os.path.sep in key: 
 	    return None
-            raise ValueError, "Bad key: %s" % repr(key)
         return os.path.join(self.root, key)
     
     def __contains__(self, key):
@@ -61,6 +62,8 @@ class DiskStore:
 
     def __getitem__(self, key):
         path = self._get_path(key)
+	if path == None:
+            return None
         if os.path.exists(path): 
             pickled = open(path).read()
             return self.decode(pickled)
@@ -123,11 +126,12 @@ class Session(object):
         self.session_id = session_id 
 
 
-        if self.session_id:
+        if session_id:
             self._check_expiry()
-       	    self._data = self.store[self.session_id] 
+	    if self.store[self.session_id]:
+       	    		self._data = self.store[self.session_id]
 
-        if not self.session_id:
+        if not self.session_id :
             self.session_id = self._generate_session_id()
 	    self._save()
  

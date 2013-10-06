@@ -1,0 +1,32 @@
+
+<html>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+
+{{
+
+from example.weibo.weibo_config import client
+from example.weibo.weibo_login import url,access_token,getcookies
+getcookies(request)
+}}
+
+
+{{if access_token == None :}}
+<a href={{=url}}>登录weibo</a>
+{{else:}}
+
+
+
+
+{{r = client.account.get_uid.get()}}
+你的ID：{{=str(r.uid)}} </p>
+{{r = client.statuses.user_timeline.get()}}
+
+欢迎: {{= r.statuses[0]['user']['screen_name']}} </p>
+你最近发的微博 :{{= r.statuses[0]['text']}} </p>
+
+
+
+
+{{pass}}
+
+</html>
