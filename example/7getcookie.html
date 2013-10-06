@@ -1,0 +1,20 @@
+
+<html>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+
+{{
+from session import *
+sid = request.headers['cookie']
+username,uid = loaduser(sid)
+}}
+
+
+{{for i in GET.keys():}}
+	{{=i}} | {{=GET[i]}}
+{{pass}}
+
+
+{{=username}}
+{{=uid}}
+
+</html>

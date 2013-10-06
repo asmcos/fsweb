@@ -1,0 +1,16 @@
+
+<html>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+
+{{
+from session import *
+sid = newuser('Tom',1234)
+request.send_header('Set-Cookie',sid)
+}}
+
+
+{{for i in GET.keys():}}
+	{{=i}} | {{=GET[i]}}
+{{pass}}
+
+</html>

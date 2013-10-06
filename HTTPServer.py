@@ -23,7 +23,7 @@ import urlparse
 
 from StringIO import StringIO as SIO
 from template import *
-
+from session  import *
 
 def get_params(path):
     parsed_path = urlparse.urlparse(path)
@@ -51,7 +51,7 @@ def handler_POST(self):
 
     f = SIO()
     path = self.translate_path(self.path)
-    buf = template_file(path,{'POST':post_form,'GET':params})
+    buf = template_file(path,{'POST':post_form,'GET':params,'request':self})
     f.write(buf)
     f.seek(0)
 
@@ -138,7 +138,7 @@ class FsHTTPRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         params = get_params(self.path)
  
 	f1 = SIO()
-	buf = template_file(path,{'GET':params})
+	buf = template_file(path,{'GET':params,'request':self})
 	f1.write(buf)
 	f1.seek(0)
 
