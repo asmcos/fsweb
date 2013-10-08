@@ -27,3 +27,10 @@ $more example/1.pyhtml
 <a href={{=url}}> {{=name}} </a>
 
 ```
+
+
+Use subdir as root dir.
+
+```
+python HTTPServer 8000 -d example
+```

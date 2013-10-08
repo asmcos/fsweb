@@ -20,10 +20,15 @@ import shutil
 import mimetypes
 import cgi
 import urlparse
+from getopt import getopt 
 
 from StringIO import StringIO as SIO
 from template import *
 from session  import *
+
+
+
+
 
 def get_params(path):
     parsed_path = urlparse.urlparse(path)
@@ -209,6 +214,9 @@ class FsHTTPRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         words = path.split('/')
         words = filter(None, words)
         path = os.getcwd()
+
+	path = os.path.join(path,root_dir)
+
         for word in words:
             drive, word = os.path.splitdrive(word)
             head, word = os.path.split(word)
@@ -275,4 +283,10 @@ def start(HandlerClass = FsHTTPRequestHandler,
 
 
 if __name__ == '__main__':
+    opts,args = getopt(sys.argv[2:],'d:',['help'])
+    for o,a in opts:
+	if o == '-d':
+		root_dir = a
+	if o == '--help':
+		print sys.argv[0], '8000 -d [web root dir]'
     start()
